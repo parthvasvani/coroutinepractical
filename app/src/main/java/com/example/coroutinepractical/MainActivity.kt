@@ -2,21 +2,14 @@ package com.example.coroutinepractical
 
 import android.os.Bundle
 import android.util.Log
+import android.widget.TextView
 import androidx.activity.ComponentActivity
-import androidx.activity.compose.setContent
-import androidx.activity.enableEdgeToEdge
-import androidx.compose.foundation.layout.fillMaxSize
-import androidx.compose.foundation.layout.padding
-import androidx.compose.material3.Scaffold
-import androidx.compose.material3.Text
-import androidx.compose.runtime.Composable
-import androidx.compose.ui.Modifier
-import androidx.compose.ui.tooling.preview.Preview
-import com.example.coroutinepractical.ui.theme.CoroutinePracticalTheme
 import kotlinx.coroutines.DelicateCoroutinesApi
+import kotlinx.coroutines.Dispatchers
 import kotlinx.coroutines.GlobalScope
 import kotlinx.coroutines.delay
 import kotlinx.coroutines.launch
+import kotlinx.coroutines.withContext
 
 class MainActivity : ComponentActivity() {
 
@@ -27,11 +20,15 @@ class MainActivity : ComponentActivity() {
         super.onCreate(savedInstanceState)
         setContentView(R.layout.activity_main)
 
+        val tvDummy = findViewById<TextView>(R.id.tvDummy)
         GlobalScope.launch {
-            val networkCallAnswer = doNetworkCall()
-            val networkCallAnswer2 = doNetworkCall2()
-            Log.d(TAG,networkCallAnswer)
-            Log.d(TAG,networkCallAnswer2)
+            Log.d(TAG,"Starting coroutine in thread ${Thread.currentThread().name}")
+            val answer = doNetworkCall()
+            withContext(Dispatchers.Main){
+                Log.d(TAG,"Setting text in thread ${Thread.currentThread().name}")
+                tvDummy.text = answer
+            }
+
         }
     }
 
