@@ -17,6 +17,7 @@ import kotlinx.coroutines.DelicateCoroutinesApi
 import kotlinx.coroutines.GlobalScope
 import kotlinx.coroutines.delay
 import kotlinx.coroutines.launch
+import kotlinx.coroutines.runBlocking
 
 class MainActivity : ComponentActivity() {
 
@@ -27,20 +28,20 @@ class MainActivity : ComponentActivity() {
         super.onCreate(savedInstanceState)
         setContentView(R.layout.activity_main)
 
-        GlobalScope.launch {
-            val networkCallAnswer = doNetworkCall()
-            val networkCallAnswer2 = doNetworkCall2()
-            Log.d(TAG,networkCallAnswer)
-            Log.d(TAG,networkCallAnswer2)
+        Log.d(TAG,"Before runBlocking")
+        runBlocking {
+            launch {
+                delay(3000L)
+                Log.d(TAG,"Finished to Coroutine 1")
+            }
+            launch {
+                delay(3000L)
+                Log.d(TAG,"Finished to Coroutine 2")
+            }
+            Log.d(TAG,"Start of runBlocking")
+            delay(5000L)
+            Log.d(TAG,"End of runBlocking")
         }
-    }
-
-    suspend fun doNetworkCall() : String {
-        delay(3000L)
-        return "This is the answer"
-    }
-    suspend fun doNetworkCall2() : String {
-        delay(3000L)
-        return "This is the answer"
+        Log.d(TAG,"After runBlocking")
     }
 }
