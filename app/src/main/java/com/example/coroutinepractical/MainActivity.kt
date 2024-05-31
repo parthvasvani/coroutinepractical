@@ -16,7 +16,11 @@ import com.example.coroutinepractical.ui.theme.CoroutinePracticalTheme
 import kotlinx.coroutines.DelicateCoroutinesApi
 import kotlinx.coroutines.GlobalScope
 import kotlinx.coroutines.delay
+import kotlinx.coroutines.isActive
 import kotlinx.coroutines.launch
+import kotlinx.coroutines.runBlocking
+import kotlinx.coroutines.time.withTimeout
+import kotlinx.coroutines.withTimeout
 
 class MainActivity : ComponentActivity() {
 
@@ -27,20 +31,33 @@ class MainActivity : ComponentActivity() {
         super.onCreate(savedInstanceState)
         setContentView(R.layout.activity_main)
 
-        GlobalScope.launch {
-            val networkCallAnswer = doNetworkCall()
-            val networkCallAnswer2 = doNetworkCall2()
-            Log.d(TAG,networkCallAnswer)
-            Log.d(TAG,networkCallAnswer2)
-        }
-    }
+        val job = GlobalScope.launch {
+            /*repeat(5){
+                Log.d(TAG, "Coroutine is still continuing...")
+                delay(1000L)
+            }*/
 
-    suspend fun doNetworkCall() : String {
-        delay(3000L)
-        return "This is the answer"
-    }
-    suspend fun doNetworkCall2() : String {
-        delay(3000L)
-        return "This is the answer"
+            Log.d(TAG, "Starting long running calculation...")
+            withTimeout(3000L){
+                for (i in 30..40){
+                    if (isActive){
+                        Log.d(TAG, "Result for i = $i: ${fib(i)}")
+                    }
+                }
+            }
+            Log.d(TAG, "Ending long running calculation...")
+        }
+        /*runBlocking {
+            //job.join()
+            delay(2000L)
+            job.cancel()
+            Log.d(TAG, "Canceled job !")
+            }*/
+        }
+
+    fun fib(n: Int): Long{
+        return if(n==0) 0
+        else if(n==1) 1
+        else fib(n-1) + fib(n-2)
     }
 }
