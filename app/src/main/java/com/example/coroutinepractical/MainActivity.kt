@@ -1,7 +1,9 @@
 package com.example.coroutinepractical
 
+import android.content.Intent
 import android.os.Bundle
 import android.util.Log
+import android.widget.Button
 import androidx.activity.ComponentActivity
 import androidx.activity.compose.setContent
 import androidx.activity.enableEdgeToEdge
@@ -12,6 +14,7 @@ import androidx.compose.material3.Text
 import androidx.compose.runtime.Composable
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.tooling.preview.Preview
+import androidx.lifecycle.lifecycleScope
 import com.example.coroutinepractical.ui.theme.CoroutinePracticalTheme
 import kotlinx.coroutines.DelicateCoroutinesApi
 import kotlinx.coroutines.GlobalScope
@@ -27,20 +30,21 @@ class MainActivity : ComponentActivity() {
         super.onCreate(savedInstanceState)
         setContentView(R.layout.activity_main)
 
-        GlobalScope.launch {
-            val networkCallAnswer = doNetworkCall()
-            val networkCallAnswer2 = doNetworkCall2()
-            Log.d(TAG,networkCallAnswer)
-            Log.d(TAG,networkCallAnswer2)
+        val btnStartActivity = findViewById<Button>(R.id.btnStartActivity)
+        btnStartActivity.setOnClickListener {
+            lifecycleScope.launch {
+                while (true){
+                    delay(1000L)
+                    Log.d(TAG,"Still running...")
+                }
+            }
+            GlobalScope.launch {
+                delay(5000L)
+                Intent(this@MainActivity,SecondActivity::class.java).also {
+                    startActivity(it)
+                    finish()
+                }
+            }
         }
-    }
-
-    suspend fun doNetworkCall() : String {
-        delay(3000L)
-        return "This is the answer"
-    }
-    suspend fun doNetworkCall2() : String {
-        delay(3000L)
-        return "This is the answer"
     }
 }
