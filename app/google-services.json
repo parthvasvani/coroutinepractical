@@ -1,0 +1,29 @@
+{
+  "project_info": {
+    "project_number": "783206649960",
+    "project_id": "fir-turorials-50252",
+    "storage_bucket": "fir-turorials-50252.appspot.com"
+  },
+  "client": [
+    {
+      "client_info": {
+        "mobilesdk_app_id": "1:783206649960:android:458c0e2f9ea6b31393ebdd",
+        "android_client_info": {
+          "package_name": "com.example.coroutinepractical"
+        }
+      },
+      "oauth_client": [],
+      "api_key": [
+        {
+          "current_key": "AIzaSyCtyZB5eYxIM_r-fBqZ9ZE6LGkVcqT7-nU"
+        }
+      ],
+      "services": {
+        "appinvite_service": {
+          "other_platform_oauth_client": []
+        }
+      }
+    }
+  ],
+  "configuration_version": "1"
+}

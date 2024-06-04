@@ -1,6 +1,7 @@
 plugins {
     alias(libs.plugins.android.application)
     alias(libs.plugins.jetbrains.kotlin.android)
+    id("com.google.gms.google-services") version "4.4.2" apply false
 }
 
 android {
@@ -69,6 +70,12 @@ dependencies {
     debugImplementation(libs.androidx.ui.test.manifest)
 
     //def coroutines_version("1.2.1")
-    implementation("org.jetbrains.kotlinx:kotlinx-coroutines-core:1.5.0")
-    implementation("org.jetbrains.kotlinx:kotlinx-coroutines-android:1.3.5")
+    implementation("org.jetbrains.kotlinx:kotlinx-coroutines-core:1.5.2")
+    implementation("org.jetbrains.kotlinx:kotlinx-coroutines-android:1.5.2")
+    implementation("com.google.firebase:firebase-firestore-ktx:25.0.0")
+    implementation("org.jetbrains.kotlinx:kotlinx-coroutines-play-services:1.5.1")
+    implementation(platform("com.google.firebase:firebase-bom:33.1.0"))
 }
+// Apply the google-services plugin
+apply(plugin = "com.google.gms.google-services")
+
